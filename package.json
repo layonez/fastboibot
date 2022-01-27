@@ -1,0 +1,25 @@
+{
+  "name": "fastboibot",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "forever -a -o out.log -e err.log app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/layonez/fastboibot.git"
+  },
+  "author": "layonez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/layonez/fastboibot/issues"
+  },
+  "homepage": "https://github.com/layonez/fastboibot#readme",
+  "dependencies": {
+    "dotenv": "^14.3.2",
+    "forever": "^4.0.2",
+    "node-fetch": "2.0",
+    "node-schedule": "^2.1.0",
+    "node-telegram-bot-api": "^0.56.0"
+  }
+}
