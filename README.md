@@ -5,9 +5,11 @@
 3. Start chat with bot or add bot to group
 4. Grab chat id from https://api.telegram.org/bot<your_token>/getUpdates
 5. You can have your own schedule for bot - use https://crontab.guru/#0-59_6-23_*__\__ to create one. Default is "Run at every minute from 0 through 59 past every hour from 6 through 23"
-6. Update .env_example with your variables and rename it to .env
-7. `docker build -t fast_boi_bot .`
-8. `docker run fast_boi_bot` or use cloud setup
+6. If you want to crawl Immo24 - go to website, just apply you filters and grab url. **It should be list type, not map**
+7. If you want to crawl ebay-kleinanzeigen.de - go to website, apply your filters and check that **/seite:1/** pagination data is in url, if not navigate to second page and it should be there. Change **/seite:2/** to **/seite:1/** and grab that URL
+8. Update .env_example with your variables and rename it to .env
+9. `docker build -t fast_boi_bot .`
+10. `docker run fast_boi_bot` or use cloud setup
 
 ## You can deploy the app to any of the cloud services you prefer. Here I will describe how to use [Heroku](https://www.heroku.com/pricing) to run this app free for 7/24:
 

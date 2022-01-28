@@ -16,7 +16,9 @@
   },
   "homepage": "https://github.com/layonez/fastboibot#readme",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
     "dotenv": "^14.3.2",
+    "fetch-retry": "^5.0.1",
     "forever": "^4.0.2",
     "node-fetch": "2.0",
     "node-schedule": "^2.1.0",
