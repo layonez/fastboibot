@@ -1,5 +1,7 @@
 ## HOW TO
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/821159f07dc944cdbd3f4095fd8b1cb0)](https://app.codacy.com/gh/layonez/fastboibot?utm_source=github.com&utm_medium=referral&utm_content=layonez/fastboibot&utm_campaign=Badge_Grade_Settings)
+
 1. Create new telegram bot with https://telegram.me/BotFather
 2. Grab bot token to access the HTTP API
 3. Start chat with bot or add bot to group
