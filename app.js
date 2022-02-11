@@ -2,9 +2,8 @@ const schedule = require("node-schedule");
 require("dotenv").config();
 const crawlImmo = require("./crawlImmo");
 const crawlEbay = require("./crawlEbay");
-
 const crawlImmowelt = require("./crawlImmowelt");
-crawlImmowelt();
+const crawlMeinestadt = require("./crawlMeinestadt");
 
 const immoSearchLink = process.env.IMMOBILIENSCOUT24_SEARCH_URL;
 const immoScheduleRule = process.env.IMMO_SCHEDULE_RULE;
@@ -13,6 +12,7 @@ const ebaySearchLink = process.env.KLEINANZEIGEN_SEARCH_URL;
 const ebayScheduleRule = process.env.EBAY_SCHEDULE_RULE;
 
 const immoweltScheduleRule = process.env.IMMOWELT_SCHEDULE_RULE;
+const meinestadtScheduleRule = process.env.MEINESTADT_SCHEDULE_RULE;
 
 const token = process.env.TELEGRAM_TOKEN;
 const chatId = process.env.CHAT_ID;
@@ -27,10 +27,21 @@ console.info(
 
     immowelt ScheduleRule: ${immoweltScheduleRule}
 
+    meinestadt ScheduleRule: ${meinestadtScheduleRule}
+
     token: ${token} 
     chatId: ${chatId} 
 `
 );
+
+if (meinestadtScheduleRule)
+  schedule.scheduleJob(meinestadtScheduleRule, () => {
+    crawlMeinestadt();
+  });
+else
+  console.info(
+    "meinestadt - Some immo setting are missing, crawler initialization skipped"
+  );
 
 if (immoweltScheduleRule)
   schedule.scheduleJob(immoweltScheduleRule, () => {
