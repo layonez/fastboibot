@@ -1,5 +1,6 @@
 require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
+const getRandomUserAgent = require("./utils/userAgents");
 const originalFetch = require("node-fetch");
 const fetch = require("fetch-retry")(originalFetch);
 
@@ -42,14 +43,15 @@ const addNewId = (appartmentData) => {
 };
 
 const getCookie = async () => {
-  const manifestReq = await originalFetch("https://www.meinestadt.de", {
+  const userAgent = getRandomUserAgent();
+
+  const manifestReq = await fetch("https://www.meinestadt.de", {
     retries: 3,
     retryDelay: 10000,
     headers: {
       Accept: "*/*",
       Connection: "keep-alive",
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 6.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.158 Safari/537.36",
+      "User-Agent": userAgent,
       "Accept-Encoding": "gzip, deflate, br",
       "Accept-Language": "en-US;q=0.5,en;q=0.3",
       "Cache-Control": "max-age=0",
@@ -61,13 +63,16 @@ const getCookie = async () => {
     method: "GET",
   });
 
-  return manifestReq.headers
-    .raw()
-    ["set-cookie"].map((c) => c.split(";")[0])
-    .join(";");
+  return [
+    manifestReq.headers
+      .raw()
+      ["set-cookie"].map((c) => c.split(";")[0])
+      .join(";"),
+    userAgent,
+  ];
 };
 
-const makeRequest = async (page, cookie) =>
+const makeRequest = async (page, cookie, userAgent) =>
   fetch(
     "https://www.meinestadt.de/muenchen/immobilien/wohnungen?service=immoweltAjax",
     {
@@ -91,8 +96,7 @@ const makeRequest = async (page, cookie) =>
         "Referrer-Policy": "unsafe-url",
         Accept: "*/*",
         Connection: "keep-alive",
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 6.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.158 Safari/537.36",
+        "User-Agent": userAgent,
         "Accept-Encoding": "gzip, deflate, br",
         "Accept-Language": "en-US;q=0.5,en;q=0.3",
         "Cache-Control": "max-age=0",
@@ -103,16 +107,16 @@ const makeRequest = async (page, cookie) =>
     }
   );
 
-const crawl = async (page = 1, cookie) => {
+const crawl = async (page = 1, cookie, userAgent) => {
   reqCount++;
 
   let data = {};
   try {
     if (!cookie) {
-      cookie = await getCookie();
+      [cookie, userAgent] = await getCookie();
     }
 
-    const rawResponse = await makeRequest(page, cookie);
+    const rawResponse = await makeRequest(page, cookie, userAgent);
 
     data = await rawResponse.json();
 
@@ -147,7 +151,7 @@ const crawl = async (page = 1, cookie) => {
       appartmentsCount = 0;
       reqCount = 0;
     } else {
-      crawl(data.results.currentPage + 1, cookie);
+      crawl(data.results.currentPage + 1, cookie, userAgent);
     }
   } catch (err) {
     console.error("Meinestadt - Error processing response:", err);
