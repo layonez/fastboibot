@@ -1,3 +1,6 @@
+#### WAS IT USEFUL? 
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/layonez)
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/821159f07dc944cdbd3f4095fd8b1cb0)](https://app.codacy.com/gh/layonez/fastboibot?utm_source=github.com&utm_medium=referral&utm_content=layonez/fastboibot&utm_campaign=Badge_Grade_Settings)
 
 | Site                      | Tips                                                                                                                                                                                                                                                                                                                                                                                         |
